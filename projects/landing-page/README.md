@@ -27,7 +27,7 @@ scrolling to anchor using `href` attribute using `a` tag is much simpler:
 ```javascript
 a.setAttribute('href', `#${sectionId}`); // anchor to every section
 ```
-But, I did it with events to to practice javascript.
+But, I did it with events too in oreder to practice javascript.
 
 ### Getting absolute Position of an Element
 I used code form [this webiste](https://www.aspsnippets.com/Articles/Get-Absolute-Position-Screen-Cordinates-of-HTML-Elements-using-JavaScript.aspx) to find the absolute position of an element.
