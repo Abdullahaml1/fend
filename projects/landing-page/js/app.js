@@ -18,12 +18,38 @@
  * 
 */
 
+// getting all sections form the DOM
+const sectionsList = document.querySelectorAll('main section');
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */
+
+// build nav helpers
+/**
+  * @description building the navigation bar
+  * @constructor
+  * @param sectionsList list of all sections
+ */
+
+function buildNav(sectionsList) {
+    const frag = document.createDocumentFragment();
+    for (section of sectionsList) {
+        const sectionName = section.querySelector('h2').textContent;
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+
+        a.textContent = sectionName;
+        a.setAttribute('class', 'menu__link');
+
+        li.appendChild(a);
+        frag.appendChild(li);
+    }
+    const navBarList = document.querySelector('#navbar__list');
+    navBarList.appendChild(frag);
+}
 
 
 
@@ -34,6 +60,7 @@
 */
 
 // build the nav
+buildNav(sectionsList);
 
 
 // Add class 'active' to section when near top of viewport
