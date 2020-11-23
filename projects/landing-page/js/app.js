@@ -27,6 +27,7 @@ const sectionsList = document.querySelectorAll('main section');
  * 
 */
 
+
 // build nav helpers
 /**
   * @description building the navigation bar
@@ -38,18 +39,24 @@ function buildNav(sectionsList) {
     const frag = document.createDocumentFragment();
     for (section of sectionsList) {
         const sectionName = section.querySelector('h2').textContent;
+        const sectionId = section.getAttribute('id');
+
         const li = document.createElement('li');
         const a = document.createElement('a');
 
         a.textContent = sectionName;
-        a.setAttribute('class', 'menu__link');
+        a.setAttribute('class', 'menu__link'); //adding class name to apply css
+        a.setAttribute('href', `#${sectionId}`); // anchor to every section
 
         li.appendChild(a);
         frag.appendChild(li);
     }
+    // attaching the lis to the navbarlist
     const navBarList = document.querySelector('#navbar__list');
     navBarList.appendChild(frag);
 }
+
+
 
 
 
