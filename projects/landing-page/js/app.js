@@ -18,6 +18,8 @@
  * 
 */
 
+const MAX_VIEWPORT_HEIGHT = 220;
+
 // getting all sections form the DOM
 const sectionsList = document.querySelectorAll('main section');
 
@@ -27,12 +29,32 @@ const sectionsList = document.querySelectorAll('main section');
  * 
 */
 
+function isElementNearTopOfViewPort(element) {
+    return (element.getBoundingClientRect().top < MAX_VIEWPORT_HEIGHT) &&
+        (element.getBoundingClientRect().top >
+         (MAX_VIEWPORT_HEIGHT - element.getBoundingClientRect().height/1.1));
+}
+
+
+
+
+/**
+ * End Helper Functions
+ * Begin Main Functions
+ * 
+*/
+
+// build the nav
+
+
+
+
 
 // build nav helpers
 /**
-  * @description building the navigation bar
-  * @constructor
-  * @param sectionsList list of all sections
+ * @description building the navigation bar
+ * @constructor
+ * @param sectionsList list of all sections
  */
 
 function buildNav(sectionsList) {
@@ -57,20 +79,34 @@ function buildNav(sectionsList) {
 }
 
 
-
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
-
-// build the nav
 buildNav(sectionsList);
 
 
 // Add class 'active' to section when near top of viewport
+
+function activateSectionInNearViewport() {
+
+    let lastSectionIndex = 0;
+    for (let i=0; i< sectionsList.length; i++) {
+
+        const section = sectionsList[i];
+
+        if(isElementNearTopOfViewPort(section)) {
+            section.classList.add("activate-section");
+            lastSectionIndex = i;
+            break;
+        } else {
+            section.classList.remove("activate-section");
+        }
+    }
+
+    for (let i = lastSectionIndex + 1; i < sectionsList.length; i++) {
+        sectionsList[i].classList.remove("activate-section");
+    }
+}
+
+
+
 
 
 // Scroll to anchor ID using scrollTO event
@@ -87,5 +123,6 @@ buildNav(sectionsList);
 // Scroll to section on link click
 
 // Set sections as active
+document.addEventListener('scroll', activateSectionInNearViewport);
 
 
