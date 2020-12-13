@@ -11,6 +11,13 @@ const exampleUrlLocal = 'http://api.openweathermap.org/data/2.5/weather?zip=1151
 const exampleUrlLocal1 = 'http://api.openweathermap.org/data/2.5/weather?q=Alexandria,EG&units=metric&APPID=91d0e67a4338df34d1a3c031bd2eb33c';
 
 
+// DOM elements
+const button = document.querySelector('#generate');
+const zipCodeLabel = document.querySelector('#zip');
+const feelingTextArea = document.querySelector('#feelings');
+const dateDiv = document.querySelector('#date');
+const TempDiv = document.querySelector('#temp');
+const contentDiv = document.querySelector('#content');
 
 
 
@@ -27,6 +34,7 @@ const getData = async (url='') => {
 
     try {
         const receivedData = await response.json();
+        // TODO remove the log message
         console.log(receivedData);
         return receivedData;
 
@@ -56,7 +64,7 @@ const getDataExternal = async (url='') => {
 
 
     const receivedData = await response.json();
-    console.log(receivedData);
+    // TODO remove the log
     return receivedData;
 };
 
@@ -67,7 +75,7 @@ const getDataExternal = async (url='') => {
  * @param url the url to create GET request for
  * @return the received data from the server
  **/
-const PostData = async (url='', data={}) => {
+const postData = async (url='', data={}) => {
 
     const postRequestMsg = {
         method: 'POST',
@@ -124,19 +132,55 @@ const getWeatherDataByCityName = async (countryCode='', cityName='', units='metr
 
 };
 
-//example
-getWeatherDataByZipCode('94040');
-// getWeatherDataByZipCode('un', '94040').catch( e => {console.log('bypassing error')});
+
+
+
+async function updateUiSuccess(commingWeatherData) {
+}
+
+
+
+async function updateUiFailed(error) {
+}
+
+
+function buttonPressedCallback() {
+
+    // Create a new date instance dynamically with JS
+    let d = new Date();
+    let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+
+    // date from the user
+    const zipCode = zipCodeLabel.value;
+    const feeling = feelingTextArea.value;
+
+
+    // calling api and chaining actions
+    getWeatherDataByZipCode(zipCode)
+        .then ((weatherData) => {
+            weatherData.feeling = feeling;
+            weatherData.date = newDate;
+            postData('/addWeatherData', weatherData);
+        })
+
+        .then(getData('/getWeatherEndPoint'))
+
+        .then(commingWeatherData => {
+            updateUiSuccess(commingWeatherData);
+        })
+
+        .catch(error => {
+            updateUiFailed(error);
+        });
+
+}
+
+
+// main code
+button.addEventListener('click', buttonPressedCallback);
 
 
 
 
-
-
-
-
-// Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 
