@@ -16,8 +16,9 @@ const button = document.querySelector('#generate');
 const zipCodeLabel = document.querySelector('#zip');
 const feelingTextArea = document.querySelector('#feelings');
 const dateDiv = document.querySelector('#date');
-const TempDiv = document.querySelector('#temp');
+const tempDiv = document.querySelector('#temp');
 const contentDiv = document.querySelector('#content');
+const errorDiv = document.querySelector('#error');
 
 
 
@@ -35,7 +36,7 @@ const getData = async (url='') => {
     try {
         const receivedData = await response.json();
         // TODO remove the log message
-        console.log(receivedData);
+        // console.log(receivedData);
         return receivedData;
 
     } catch(error) {
@@ -99,6 +100,10 @@ const postData = async (url='', data={}) => {
 };
 
 
+
+
+
+
 /**
  * @description  fetches weather data with zip code and country code.
  * @param url the url to create GET request for
@@ -136,11 +141,23 @@ const getWeatherDataByCityName = async (countryCode='', cityName='', units='metr
 
 
 async function updateUiSuccess(commingWeatherData) {
+    errorDiv.innerHTML = ``;
+
+    dateDiv.innerHTML = `<b> Date is: </b>${commingWeatherData.date}`;
+
+    tempDiv.innerHTML = `<b> Temperature is: </b> `+
+        `${commingWeatherData.main.temp} &#8451`;
+
+    contentDiv.textContent = commingWeatherData.feeling;
 }
 
 
 
 async function updateUiFailed(error) {
+
+    errorDiv.innerHTML = `<b> Error: </b> The zip code, city, or country` +
+    ` you Entered is Wrong Please Try again`;
+
 }
 
 
@@ -160,13 +177,17 @@ function buttonPressedCallback() {
         .then ((weatherData) => {
             weatherData.feeling = feeling;
             weatherData.date = newDate;
-            postData('/addWeatherData', weatherData);
+            return postData('/addWeatherData', weatherData);
         })
 
-        .then(getData('/getWeatherEndPoint'))
+
+        .then(() => {
+            return getData('/getWeatherEndPoint');
+        })
 
         .then(commingWeatherData => {
             updateUiSuccess(commingWeatherData);
+            console.log(commingWeatherData);
         })
 
         .catch(error => {
