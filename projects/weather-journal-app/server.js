@@ -1,5 +1,11 @@
 // Setup empty JS object to act as endpoint for all routes
-let projectData = {test: 'hello'};
+let projectData = {};
+//     main: {
+//         temp:30,
+//     },
+//     feeling: 'test',
+//     date: '123',
+// };
 
 // Require Express to run server and routes
 const express = require('express');
@@ -47,7 +53,11 @@ app.post('/addWeatherData', addWeatherDataCallback);
 
 function addWeatherDataCallback (request, responses) {
     projectData = request.body;
+    // next();
     console.log(projectData);
+    // we muse send response back, otherwise the promise will be in pending
+    // state for ever
+    responses.send({code: 200});
 }
 
 
