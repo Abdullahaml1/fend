@@ -62,6 +62,8 @@ const getDataExternal = async (url='') => {
 
 
     const receivedData = await response.json();
+    // TODO remove the log
+    console.log(receivedData);
     return receivedData;
 };
 
@@ -136,7 +138,7 @@ const getWeatherDataByZipCode = async (zipCode='', countryCode='us', units='metr
  * getWeatherDataByZipCode('Alexandria', 'EG');
  * getWeatherDataByZipCode('Alexandria', 'EG').catch( e => {console.log('bypassing error')});
  **/
-const getWeatherDataByCityName = async (countryCode='', cityName='', units='metric') => {
+const getWeatherDataByCityName = async (cityName='', countryCode='', units='metric') => {
     const baseUrl = weatherBaseUrl;
     const key = weatherApiKey;
     const url = `${baseUrl}?q=${cityName},${countryCode}&units=${units}` +
