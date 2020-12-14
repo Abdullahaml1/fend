@@ -1,10 +1,10 @@
 # Weather-Journal App Project
 
 ## Overview
-This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI. 
+This project Allows the use to know the current weather with three methods: 
+* (zipcode) for US only. Ex: "94040"
+* (zipcode, [ISO two letter countrycode](https://en.wikipedia.org/wiki/ISO_3166-2)). Ex: "94040,US"
+* (cityName, [ISO two letter countrycode](https://en.wikipedia.org/wiki/ISO_3166-2)). Ex: "Alexandria,EG"
 
-## Instructions
-This will require modifying the `server.js` file and the `website/app.js` file. You can see `index.html` for element references, and once you are finished with the project steps, you can use `style.css` to style your application to customized perfection.
+Also we support a bit of responsive design.
 
-## Extras
-If you are interested in testing your code as you go, you can use `tests.js` as a template for writing and running some basic tests for your code.
