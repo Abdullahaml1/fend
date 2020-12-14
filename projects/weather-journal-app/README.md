@@ -6,5 +6,5 @@ This project Allows the use to know the current weather with three methods:
 * (zipcode, [ISO two letter countrycode](https://en.wikipedia.org/wiki/ISO_3166-2)). Ex: "94040,US"
 * (cityName, [ISO two letter countrycode](https://en.wikipedia.org/wiki/ISO_3166-2)). Ex: "Alexandria,EG"
 
-Also we support a bit of responsive design.
+Also we support a bit of responsive design. with an error message if the input is wrong or the input does not exist.
 
