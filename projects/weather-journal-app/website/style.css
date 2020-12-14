@@ -16,16 +16,45 @@ body{
     font-family: 'Oswald', sans-serif;
 }
 
-.holder{
+/* Typeography General*/
+h1 {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 2.4em;
+    margin: 2em 1rem;
+}
+@media only screen and (min-width: 35em){
+    h1 {
+        font-size: 2.4em;
+        margin-bottom:6em;
+    }
+}
+
+
+.holder.feel {
+    height: 18em;
+    margin-buttom: .3em;
 
 }
 
+.holder.zip {
+    float: left;
+}
+
+
 .entry{
     background: rgba(59, 74, 107, .4);
+    margin-top: 2em;
+    width: 80vw;
+    height: auto;
 }
 
 #entryHolder{
 
+}
+
+.discription {
+    font-size:20px;
+    color: gray;
 }
 
 #date{
@@ -50,39 +79,61 @@ body{
 /*  Basic Styling To Override Default For Basic HTML Elements */
 label{
     display:block;
-    font-size: 27px;
+    font-size: 2em;
 }
+
+@media screen and (min-width: 45em){
+    label {
+        display:block;
+        font-size: 1.5em;
+        /* background-color: gray; */
+    }
+
+}
+
 
 input{
     display:block;
-    height: 60px;
-    width: 320px;
+    height: 2em;
+    width: 50vw;
     background:#22b2da;
     color: #f0d43a;
-    font-size: 20px;
+    font-size: 2em;
     font-family: 'Oswald', sans-serif;
     border: none;
 }
 
+
+@media screen and (max-width: 45em){
+    input {
+        width: 8em;
+    }
+}
+
 button{
-    width: 400px;
-    height: 100px;
+    width: auto;
     background: #3b4a6b;
     color: #f0d43a;
-    font-size: 26px;
+    font-size: 2em;
     font-family: 'Oswald', sans-serif;
     border: none;
     box-shadow: 2px 4px 5px #444;
+    align-self: center;
+    margin-left: 3em;
+    margin-right: 3em;
 }
-h1{
-    font-size: 36px;
-}
+/* h1{ */
+/*     font-size: 36px; */
+/* } */
 
 textarea{
     background:#22b2da;
     color: #f0d43a;
-    font-size: 20px;
+    font-size: 1em;
     font-family: 'Oswald', sans-serif;
+    width: 80vw;
+    /* height: 10em; */
+    height: 150px;
 }
 /* Reset style for HTML element on active to have no border*/
 input:focus,
