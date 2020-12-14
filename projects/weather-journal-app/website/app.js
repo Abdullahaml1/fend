@@ -35,12 +35,9 @@ const getData = async (url='') => {
 
     try {
         const receivedData = await response.json();
-        // TODO remove the log message
-        // console.log(receivedData);
         return receivedData;
 
     } catch(error) {
-        // TODO remove this log statement
         console.log('Error: ', error);
     }
 
@@ -65,7 +62,6 @@ const getDataExternal = async (url='') => {
 
 
     const receivedData = await response.json();
-    // TODO remove the log
     return receivedData;
 };
 
@@ -127,6 +123,19 @@ const getWeatherDataByZipCode = async (zipCode='', countryCode='us', units='metr
 
 
 
+
+
+/**
+ * @description  fetches weather data with city name and country code.
+ * @param url the url to create GET request for
+ * @param cityName the name of the city
+ * @param countryCode the ISO3166-1.alpha2 code of the country, the default is 'us'
+ * @param units the type of the units.
+ * @return weather data object at this form: https://openweathermap.org/current#zip
+ * Examples:
+ * getWeatherDataByZipCode('Alexandria', 'EG');
+ * getWeatherDataByZipCode('Alexandria', 'EG').catch( e => {console.log('bypassing error')});
+ **/
 const getWeatherDataByCityName = async (countryCode='', cityName='', units='metric') => {
     const baseUrl = weatherBaseUrl;
     const key = weatherApiKey;
@@ -140,6 +149,13 @@ const getWeatherDataByCityName = async (countryCode='', cityName='', units='metr
 
 
 
+
+/**
+  * @description updates the UI if we fetches weather data successfully
+  *              in promise chain
+  * @param commingWeatherDara of type object
+  * @return a promise
+ **/
 async function updateUiSuccess(commingWeatherData) {
     errorDiv.innerHTML = ``;
 
@@ -153,6 +169,14 @@ async function updateUiSuccess(commingWeatherData) {
 
 
 
+
+
+
+/**
+ * @description updates the UI if we failed to fetch weather data
+ * @param error of type Error
+ * @return a promise
+ **/
 async function updateUiFailed(error) {
 
     errorDiv.innerHTML = `<b> Error: </b> The zip code, city, or country` +
@@ -161,6 +185,11 @@ async function updateUiFailed(error) {
 }
 
 
+
+
+/**
+  * @description the main function of the code that response if button is clicked
+ **/
 function buttonPressedCallback() {
 
     // Create a new date instance dynamically with JS
