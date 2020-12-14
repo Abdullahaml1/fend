@@ -13,7 +13,7 @@ const exampleUrlLocal1 = 'http://api.openweathermap.org/data/2.5/weather?q=Alexa
 
 // DOM elements
 const button = document.querySelector('#generate');
-const zipCodeLabel = document.querySelector('#zip');
+const inputElement = document.querySelector('#zip');
 const feelingTextArea = document.querySelector('#feelings');
 const dateDiv = document.querySelector('#date');
 const tempDiv = document.querySelector('#temp');
@@ -150,6 +150,46 @@ const getWeatherDataByCityName = async (cityName='', countryCode='', units='metr
 
 
 
+/**
+  * @description fetches weather data from the openweather API from input string
+  * @param userInput of type string at form: (zipcode), or
+  *                  (zipcode, ISO two letter countrycode), or
+  *                  (city name, ISO two letter countrycode).
+                      EX: "94040", "72020,US", "Alexandria,EG".
+  * @return a promise contains weather data object at this form:
+  *         https://openweathermap.org/current#zip
+ **/
+const getWeatherFromUserInput = async (userInput='') => {
+
+    const paramArr = userInput.split(",");
+
+    if (paramArr.length === 1 ) {
+        // is a number then its zipcode
+        if (!isNaN(paramArr[0])) {
+
+            const zipCode = paramArr[0];
+            return getWeatherDataByZipCode(zipCode);
+        } else {
+            throw Error ("The input is not zip code");
+        }
+    }else if (paramArr.length === 2) {
+
+        // is a number then its zipcode
+        if (!isNaN(paramArr[0])) {
+            const zipCode = paramArr[0];
+            const countryCode = paramArr[1];
+            return getWeatherDataByZipCode(zipCode, countryCode);
+        } else {
+            // then it is a city name
+            const cityName = paramArr[0];
+            const countryCode = paramArr[1];
+            return getWeatherDataByCityName(cityName, countryCode);
+        }
+    } else {
+        throw Error ('The input is not valid');
+    }
+}
+
 
 
 /**
@@ -164,7 +204,8 @@ async function updateUiSuccess(commingWeatherData) {
     dateDiv.innerHTML = `<b> Date is: </b>${commingWeatherData.date}`;
 
     tempDiv.innerHTML = `<b> Temperature is: </b> `+
-        `${commingWeatherData.main.temp} &#8451`;
+        `${commingWeatherData.main.temp} &#8451 in `+
+        `${commingWeatherData.name}.`;
 
     contentDiv.textContent = commingWeatherData.feeling;
 }
@@ -199,17 +240,19 @@ function buttonPressedCallback() {
     let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
     // date from the user
-    const zipCode = zipCodeLabel.value;
+    const userInput = inputElement.value;
     const feeling = feelingTextArea.value;
 
 
     // calling api and chaining actions
-    getWeatherDataByZipCode(zipCode)
+    // getWeatherDataByZipCode(zipCode)
+    getWeatherFromUserInput(userInput)
         .then ((weatherData) => {
             weatherData.feeling = feeling;
             weatherData.date = newDate;
             return postData('/addWeatherData', weatherData);
         })
+
 
 
         .then(() => {
